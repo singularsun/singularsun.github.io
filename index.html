@@ -1,0 +1,1023 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>sun</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            background: #02030a;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           SPACE BACKGROUND
+        ========================================= */
+
+        .space {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: -10;
+
+            background:
+                radial-gradient(
+                    ellipse at 20% 20%,
+                    rgba(80, 30, 180, 0.15),
+                    transparent 40%
+                ),
+                radial-gradient(
+                    ellipse at 80% 70%,
+                    rgba(20, 70, 200, 0.12),
+                    transparent 40%
+                ),
+                #02030a;
+        }
+
+        /* =========================================
+           GALAXIES
+        ========================================= */
+
+        .galaxy {
+            position: absolute;
+
+            width: 450px;
+            height: 190px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    ellipse,
+                    rgba(255, 255, 255, 0.9) 0%,
+                    rgba(170, 130, 255, 0.55) 10%,
+                    rgba(100, 60, 230, 0.25) 30%,
+                    transparent 70%
+                );
+
+            filter: blur(7px);
+            opacity: 0.45;
+
+            pointer-events: none;
+        }
+
+        /* Each galaxy has a different movement pattern */
+
+        .galaxy.one {
+            top: 5%;
+            left: -100px;
+            transform: rotate(-25deg);
+
+            animation: galaxyOne 45s ease-in-out infinite alternate;
+        }
+
+        .galaxy.two {
+            right: -120px;
+            top: 45%;
+            transform: rotate(30deg);
+            opacity: 0.35;
+
+            animation: galaxyTwo 55s ease-in-out infinite alternate;
+        }
+
+        .galaxy.three {
+            left: 35%;
+            bottom: -100px;
+            transform: rotate(-15deg);
+            opacity: 0.3;
+
+            animation: galaxyThree 65s ease-in-out infinite alternate;
+        }
+
+        .galaxy.four {
+            left: 50%;
+            top: 20%;
+            transform: rotate(15deg);
+            opacity: 0.25;
+
+            animation: galaxyFour 70s ease-in-out infinite alternate;
+        }
+
+        @keyframes galaxyOne {
+            0% {
+                transform: translate(0px, 0px) rotate(-25deg);
+            }
+
+            50% {
+                transform: translate(300px, 180px) rotate(-10deg);
+            }
+
+            100% {
+                transform: translate(100px, 400px) rotate(10deg);
+            }
+        }
+
+        @keyframes galaxyTwo {
+            0% {
+                transform: translate(0px, 0px) rotate(30deg);
+            }
+
+            50% {
+                transform: translate(-300px, -150px) rotate(15deg);
+            }
+
+            100% {
+                transform: translate(-100px, 200px) rotate(40deg);
+            }
+        }
+
+        @keyframes galaxyThree {
+            0% {
+                transform: translate(0px, 0px) rotate(-15deg);
+            }
+
+            50% {
+                transform: translate(-250px, -250px) rotate(10deg);
+            }
+
+            100% {
+                transform: translate(300px, -100px) rotate(-30deg);
+            }
+        }
+
+        @keyframes galaxyFour {
+            0% {
+                transform: translate(0px, 0px) rotate(15deg);
+            }
+
+            50% {
+                transform: translate(250px, 250px) rotate(35deg);
+            }
+
+            100% {
+                transform: translate(-200px, 100px) rotate(-10deg);
+            }
+        }
+
+        /* =========================================
+           STARS
+        ========================================= */
+.star {
+    position: fixed;
+
+    background: white;
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    box-shadow:
+        0 0 5px white,
+        0 0 10px rgba(255,255,255,0.8);
+}
+
+function createStar() {
+
+    const star = document.createElement("div");
+
+    star.className = "star";
+
+    /* -------------------------
+       STAR POSITION
+       ------------------------- */
+
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+
+
+    /* -------------------------
+       STAR SIZE
+       ------------------------- */
+
+    const size = 1.5 + Math.random() * 5;
+
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+
+
+    /* -------------------------
+       STAR BRIGHTNESS
+       Bigger = brighter
+       ------------------------- */
+
+    const glow = size * 3;
+
+    star.style.boxShadow = `
+        0 0 ${glow}px white,
+        0 0 ${glow * 2}px rgba(255,255,255,0.9),
+        0 0 ${glow * 3}px rgba(255,255,255,0.4)
+    `;
+
+    star.style.opacity =
+        0.4 + Math.random() * 0.6;
+
+
+    /* -------------------------
+       ADD STAR
+       ------------------------- */
+
+    document.body.appendChild(star);
+
+    stars.push(star);
+
+
+    /* -------------------------
+       SPEED
+       Bigger = faster
+       ------------------------- */
+
+    const speed =
+        4 +
+        size * 1.5 +
+        Math.random() * 2;
+
+
+    /* -------------------------
+       MOVE STAR
+       ------------------------- */
+
+    function moveStar() {
+
+        x += speed;
+
+
+        /* If star leaves right side,
+           bring it back on left */
+
+        if (x > window.innerWidth + size) {
+
+            x = -size;
+
+            y = Math.random() * window.innerHeight;
+        }
+
+
+        star.style.left = x + "px";
+        star.style.top = y + "px";
+
+
+        requestAnimationFrame(moveStar);
+    }
+
+
+    moveStar();
+
+    return star;
+}
+
+        /* Star explosion */
+
+        .star.popping {
+            opacity: 0;
+            transform: scale(5);
+        }
+
+        /* =========================================
+           STAR PARTICLES
+        ========================================= */
+
+        .star-particle {
+            position: fixed;
+
+            width: 3px;
+            height: 3px;
+
+            border-radius: 50%;
+            background: white;
+
+            pointer-events: none;
+
+            animation: starBurst 0.7s ease-out forwards;
+        }
+
+        @keyframes starBurst {
+
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform:
+                    translate(
+                        var(--x),
+                        var(--y)
+                    )
+                    scale(0);
+            }
+        }
+
+        /* =========================================
+           MAIN CONTENT
+        ========================================= */
+
+        .content {
+            width: 100%;
+            max-width: 1000px;
+
+            margin: auto;
+
+            padding: 55px 40px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            margin: 0;
+
+            font-size: 64px;
+
+            color: white;
+
+            letter-spacing: 2px;
+
+            text-shadow:
+                0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .header p {
+            margin-top: 5px;
+
+            font-size: 19px;
+
+            color: white;
+
+            max-width: 700px;
+
+            line-height: 1.4;
+            
+            text-shadow:
+                0 0 20px rgba(255,255,255,2);
+        }
+
+        /* =========================================
+           LINKS
+        ========================================= */
+
+        .links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+        .link {
+            display: inline-block;
+
+            font-size: 28px;
+            font-weight: bold;
+
+            text-decoration: none;
+
+            transition: transform 0.15s ease;
+        }
+
+        .red {
+            color: #ff5555;
+        }
+
+        .blue {
+            color: #4da6ff;
+        }
+
+        .green {
+            color: #55ff88;
+        }
+
+        .purple {
+            color: #c86cff;
+        }
+
+        .yellow {
+            color: #ffe066;
+        }
+
+        .cyan {
+            color: #55eaff;
+        }
+
+        .orange {
+            color: #ff9d4d;
+        }
+        
+        .pink {
+    color: #ff69b4;
+}
+
+.magenta {
+    color: #ff00ff;
+}
+
+.lime {
+    color: #aaff00;
+}
+
+.gold {
+    color: #ffd700;
+}
+
+.white {
+    color: #ffffff;
+}
+
+.sky {
+    color: #00bfff;
+}
+
+.indigo {
+    color: #6366f1;
+}
+
+.violet {
+    color: #8a2be2;
+}
+
+.coral {
+    color: #ff7f50;
+}
+
+.turquoise {
+    color: #40e0d0;
+}
+
+        .link:hover {
+            animation: wiggle 0.5s ease-in-out infinite;
+
+            text-shadow:
+                0 0 15px currentColor;
+        }
+
+        @keyframes wiggle {
+
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform:
+                    rotate(-4deg)
+                    translateX(-2px);
+            }
+
+            50% {
+                transform:
+                    rotate(4deg)
+                    translateX(2px);
+            }
+
+            75% {
+                transform:
+                    rotate(-3deg)
+                    translateX(-1px);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+
+        /* =========================================
+           FULL-SCREEN WEBSITE VIEWER
+        ========================================= */
+        .iframe-viewer {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 10000;
+            display: none;
+        }
+
+        .iframe-viewer.active {
+            display: block;
+        }
+
+        .iframe-viewer iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: white;
+        }
+
+        .iframe-close {
+            position: fixed;
+            top: 14px;
+            right: 18px;
+            z-index: 10002;
+            width: 46px;
+            height: 46px;
+            border: 2px solid rgba(255,255,255,0.75);
+            border-radius: 50%;
+            background: rgba(0,0,0,0.65);
+            color: white;
+            font-size: 28px;
+            line-height: 40px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .iframe-close:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .iframe-loading {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            background: #000;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .iframe-loading.hidden {
+            opacity: 0;
+        }
+
+        body.iframe-open {
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         FULL-SCREEN IFRAME VIEWER
+    ========================================== -->
+    <div class="iframe-viewer" id="iframeViewer">
+        <div class="iframe-loading" id="iframeLoading">Loading... (Takes Up To 30 Seconds)</div>
+        <button class="iframe-close" id="iframeClose" aria-label="Close website viewer">×</button>
+        <iframe
+            id="websiteFrame"
+            title="Embedded website"
+            allow="fullscreen; autoplay; clipboard-read; clipboard-write"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+
+    <!-- =========================================
+         SPACE
+    ========================================= -->
+
+    <div class="space">
+
+        <div class="galaxy one"></div>
+
+        <div class="galaxy two"></div>
+
+        <div class="galaxy three"></div>
+
+        <div class="galaxy four"></div>
+
+    </div>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <div class="content">
+
+        <div class="header">
+
+            <h1>sun 🌞</h1>
+
+            <p>
+    creating a world with sunshine and rainbows seems like a very hard mission, 
+    BUT, we will go to infinity and beyond
+    <span style="display: block; font-size: 12px;">
+        *Seraph based game engine. Usually more games and higher quality.
+    </span>
+</p>
+
+        </div>
+
+
+        <!-- =====================================
+             PUT YOUR LINKS HERE
+        ====================================== -->
+
+        <div class="links">
+        	
+            <a
+                class="link red" href="https://ijnfem.github.io/seraph/games/index.html" data-url="https://ijnfem.github.io/seraph/games/index.html"
+               >
+            	<span style="display: block; font-size: 12px;">★★★★★</span>
+                Ijn Seraph*
+            </a>
+            <a
+                class="link purple" href="https://mkgamesdev.github.io/MKGBA2.0/" data-url="https://mkgamesdev.github.io/MKGBA2.0/"
+               >
+            	<span style="display: block; font-size: 12px;">★★★★</span>
+                Mk Game Dev
+            </a>
+
+            <a
+                class="link blue" href="https://aidanaidan.netlify.app/games/index.html" data-url="https://aidanaidan.netlify.app/games/index.html"
+               >
+            	<span style="display: block; font-size: 12px;">★★★★★</span>
+                Double Aidan*
+            </a>
+
+            <a
+                class="link green" href="https://skyiscool.vercel.app" data-url="https://skyiscool.vercel.app"
+               >
+            	<span style="display: block; font-size: 12px;">★★★★</span>
+                skyiscool
+            </a>
+            
+            <a
+                class="link pink" href="https://cubeguide.github.io/econclasshelp/" data-url="https://cubeguide.github.io/econclasshelp/"
+               >
+            	<span style="display: block; font-size: 12px;">★★★★★</span>
+                Cube Guide*
+            </a>
+
+            
+
+            <a
+                class="link yellow" href="https://main--monumental-truffle-ed74f6.netlify.app/games" data-url="https://main--monumental-truffle-ed74f6.netlify.app/games"
+               >
+            	<span style="display: block; font-size: 12px;">★★★</span>
+                Truffle Compass
+            </a>
+            
+            <a
+                class="link orange" href="https://clivescoolwebsite.nekoweb.org/ragdollarchers.html" data-url="https://clivescoolwebsite.nekoweb.org/ragdollarchers.html"
+               >
+            	<span style="display: block; font-size: 12px;">★★★★</span>
+                Ragdoll Archers
+            </a>
+            
+            
+            <a
+                class="link cyan" href="https://webgltest-17af1.firebaseapp.com/" data-url="https://webgltest-17af1.firebaseapp.com/"
+               >
+            	<span style="display: block; font-size: 12px;">★★★★</span>
+                Smash Karts
+            </a>
+
+            <!-- ADD MORE LINKS HERE -->
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         STAR SYSTEM
+    ========================================= -->
+
+    <script>
+
+        const STAR_COUNT = 350;
+
+        const stars = [];
+
+
+        /* =====================================
+           CREATE A STAR
+        ===================================== */
+
+        function createStar() {
+
+            const star = document.createElement("div");
+
+            star.className = "star";
+
+            star.style.left =
+                Math.random() * 100 + "vw";
+
+            star.style.top =
+                Math.random() * 100 + "vh";
+
+            /* Random star size */
+
+            const size =
+                1.5 + Math.random() * 3;
+
+            star.style.width =
+                size + "px";
+
+            star.style.height =
+                size + "px";
+
+
+            /* Random brightness */
+
+            star.style.opacity =
+                0.4 + Math.random() * 0.6;
+
+
+            document.body.appendChild(star);
+
+            stars.push(star);
+
+            return star;
+        }
+
+
+        /* =====================================
+           CREATE INITIAL STARS
+        ===================================== */
+
+        for (
+            let i = 0;
+            i < STAR_COUNT;
+            i++
+        ) {
+            createStar();
+        }
+
+
+        /* =====================================
+           GET MOUSE POSITION
+        ===================================== */
+
+        let mouseX = -1000;
+        let mouseY = -1000;
+
+        document.addEventListener(
+            "mousemove",
+            function(event) {
+
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+
+                checkStars();
+
+            }
+        );
+
+
+        /* =====================================
+           CHECK IF MOUSE TOUCHED A STAR
+        ===================================== */
+
+        function checkStars() {
+
+            for (
+                let i = stars.length - 1;
+                i >= 0;
+                i--
+            ) {
+
+                const star = stars[i];
+
+                if (
+                    star.classList.contains(
+                        "popping"
+                    )
+                ) {
+                    continue;
+                }
+
+
+                const rect =
+                    star.getBoundingClientRect();
+
+                const starX =
+                    rect.left +
+                    rect.width / 2;
+
+                const starY =
+                    rect.top +
+                    rect.height / 2;
+
+
+                const distance =
+                    Math.sqrt(
+                        Math.pow(
+                            mouseX - starX,
+                            2
+                        )
+                        +
+                        Math.pow(
+                            mouseY - starY,
+                            2
+                        )
+                    );
+
+
+                /* Mouse touched star */
+
+                if (distance < 15) {
+
+                    popStar(
+                        star,
+                        starX,
+                        starY
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        /* =====================================
+           POP STAR
+        ===================================== */
+
+        function popStar(
+            star,
+            x,
+            y
+        ) {
+
+            star.classList.add(
+                "popping"
+            );
+
+
+            /* Create explosion particles */
+
+            for (
+                let i = 0;
+                i < 10;
+                i++
+            ) {
+
+                const particle =
+                    document.createElement(
+                        "div"
+                    );
+
+                particle.className =
+                    "star-particle";
+
+
+                particle.style.left =
+                    x + "px";
+
+                particle.style.top =
+                    y + "px";
+
+
+                const angle =
+                    Math.random() *
+                    Math.PI * 2;
+
+                const distance =
+                    15 +
+                    Math.random() * 35;
+
+
+                particle.style.setProperty(
+                    "--x",
+                    Math.cos(angle) *
+                    distance +
+                    "px"
+                );
+
+                particle.style.setProperty(
+                    "--y",
+                    Math.sin(angle) *
+                    distance +
+                    "px"
+                );
+
+
+                document.body.appendChild(
+                    particle
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        particle.remove();
+
+                    },
+                    700
+                );
+
+            }
+
+
+            /* Remove old star */
+
+            setTimeout(
+                function() {
+
+                    const index =
+                        stars.indexOf(star);
+
+                    if (index !== -1) {
+                        stars.splice(index, 1);
+                    }
+
+                    star.remove();
+
+
+                    /* Create replacement star */
+
+                    createStar();
+
+                },
+                400
+            );
+
+        }
+
+
+        /* =====================================
+           FULL-SCREEN IFRAME LINK SYSTEM
+        ===================================== */
+
+        const iframeViewer = document.getElementById("iframeViewer");
+        const websiteFrame = document.getElementById("websiteFrame");
+        const iframeClose = document.getElementById("iframeClose");
+        const iframeLoading = document.getElementById("iframeLoading");
+
+        document.querySelectorAll(".link[data-url]").forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                const url = this.dataset.url;
+
+                iframeLoading.classList.remove("hidden");
+                iframeViewer.classList.add("active");
+                document.body.classList.add("iframe-open");
+
+                websiteFrame.src = url;
+
+                // Put the viewer state in browser history so the Back button
+                // can close the iframe instead of leaving the main page.
+                history.pushState({ iframeOpen: true }, "", "#website");
+            });
+        });
+
+        websiteFrame.addEventListener("load", function() {
+            iframeLoading.classList.add("hidden");
+        });
+
+        function closeIframe() {
+            iframeViewer.classList.remove("active");
+            document.body.classList.remove("iframe-open");
+            websiteFrame.src = "";
+            iframeLoading.classList.remove("hidden");
+
+            if (location.hash === "#website") {
+                history.back();
+            }
+        }
+
+        iframeClose.addEventListener("click", closeIframe);
+
+        window.addEventListener("popstate", function() {
+            if (iframeViewer.classList.contains("active")) {
+                iframeViewer.classList.remove("active");
+                document.body.classList.remove("iframe-open");
+                websiteFrame.src = "";
+                iframeLoading.classList.remove("hidden");
+            }
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape" &&
+                iframeViewer.classList.contains("active")) {
+                closeIframe();
+            }
+        });
+
+    </script>
+
+</body>
+</html>
