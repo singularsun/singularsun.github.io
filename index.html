@@ -499,96 +499,10 @@ function createStar() {
         }
 
 
-        /* =========================================
-           FULL-SCREEN WEBSITE VIEWER
-        ========================================= */
-        .iframe-viewer {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000;
-            z-index: 10000;
-            display: none;
-        }
-
-        .iframe-viewer.active {
-            display: block;
-        }
-
-        .iframe-viewer iframe {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            background: white;
-        }
-
-        .iframe-close {
-            position: fixed;
-            top: 14px;
-            right: 18px;
-            z-index: 10002;
-            width: 46px;
-            height: 46px;
-            border: 2px solid rgba(255,255,255,0.75);
-            border-radius: 50%;
-            background: rgba(0,0,0,0.65);
-            color: white;
-            font-size: 28px;
-            line-height: 40px;
-            cursor: pointer;
-            text-align: center;
-            transition: transform 0.15s ease, background 0.15s ease;
-        }
-
-        .iframe-close:hover {
-            transform: scale(1.1);
-            background: rgba(255,255,255,0.2);
-        }
-
-        .iframe-loading {
-            position: fixed;
-            inset: 0;
-            z-index: 10001;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            background: #000;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
-
-        .iframe-loading.hidden {
-            opacity: 0;
-        }
-
-        body.iframe-open {
-            overflow: hidden;
-        }
-
     </style>
 </head>
 
 <body>
-
-    <!-- =========================================
-         FULL-SCREEN IFRAME VIEWER
-    ========================================== -->
-    <div class="iframe-viewer" id="iframeViewer">
-        <div class="iframe-loading" id="iframeLoading">Loading... (Takes Up To 30 Seconds)</div>
-        <button class="iframe-close" id="iframeClose" aria-label="Close website viewer">×</button>
-        <iframe
-            id="websiteFrame"
-            title="Embedded website"
-            allow="fullscreen; autoplay; clipboard-read; clipboard-write"
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-    </div>
-
 
     <!-- =========================================
          SPACE
@@ -635,34 +549,34 @@ function createStar() {
         <div class="links">
         	
             <a
-                class="link red" href="https://ijnfem.github.io/seraph/games/index.html" data-url="https://ijnfem.github.io/seraph/games/index.html"
+                class="link red" href="https://ijnfem.github.io/seraph/games/index.html" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★★★</span>
                 Ijn Seraph*
             </a>
             <a
-                class="link purple" href="https://mkgamesdev.github.io/MKGBA2.0/" data-url="https://mkgamesdev.github.io/MKGBA2.0/"
+                class="link purple" href="https://mkgamesdev.github.io/MKGBA2.0/" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★★</span>
                 Mk Game Dev
             </a>
 
             <a
-                class="link blue" href="https://aidanaidan.netlify.app/games/index.html" data-url="https://aidanaidan.netlify.app/games/index.html"
+                class="link blue" href="https://aidanaidan.netlify.app/games/index.html" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★★★</span>
                 Double Aidan*
             </a>
 
             <a
-                class="link green" href="https://skyiscool.vercel.app" data-url="https://skyiscool.vercel.app"
+                class="link green" href="https://skyiscool.vercel.app" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★★</span>
                 skyiscool
             </a>
             
             <a
-                class="link pink" href="https://cubeguide.github.io/econclasshelp/" data-url="https://cubeguide.github.io/econclasshelp/"
+                class="link pink" href="https://cubeguide.github.io/econclasshelp/" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★★★</span>
                 Cube Guide*
@@ -671,14 +585,14 @@ function createStar() {
             
 
             <a
-                class="link yellow" href="https://main--monumental-truffle-ed74f6.netlify.app/games" data-url="https://main--monumental-truffle-ed74f6.netlify.app/games"
+                class="link yellow" href="https://main--monumental-truffle-ed74f6.netlify.app/games" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★</span>
                 Truffle Compass
             </a>
             
             <a
-                class="link orange" href="https://boringfri.codeberg.page/ragdollarchers.html" data-url="https://boringfri.codeberg.page/ragdollarchers.html"
+                class="link orange" href="https://clivescoolwebsite.nekoweb.org/ragdollarchers.html" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★★</span>
                 Ragdoll Archers
@@ -686,7 +600,7 @@ function createStar() {
             
             
             <a
-                class="link cyan" href="https://webgltest-17af1.firebaseapp.com/" data-url="https://webgltest-17af1.firebaseapp.com/"
+                class="link cyan" href="https://webgltest-17af1.firebaseapp.com/" target="_blank" rel="noopener noreferrer"
                >
             	<span style="display: block; font-size: 12px;">★★★★</span>
                 Smash Karts
@@ -956,66 +870,6 @@ function createStar() {
 
         }
 
-
-        /* =====================================
-           FULL-SCREEN IFRAME LINK SYSTEM
-        ===================================== */
-
-        const iframeViewer = document.getElementById("iframeViewer");
-        const websiteFrame = document.getElementById("websiteFrame");
-        const iframeClose = document.getElementById("iframeClose");
-        const iframeLoading = document.getElementById("iframeLoading");
-
-        document.querySelectorAll(".link[data-url]").forEach(function(link) {
-            link.addEventListener("click", function(event) {
-                event.preventDefault();
-
-                const url = this.dataset.url;
-
-                iframeLoading.classList.remove("hidden");
-                iframeViewer.classList.add("active");
-                document.body.classList.add("iframe-open");
-
-                websiteFrame.src = url;
-
-                // Put the viewer state in browser history so the Back button
-                // can close the iframe instead of leaving the main page.
-                history.pushState({ iframeOpen: true }, "", "#website");
-            });
-        });
-
-        websiteFrame.addEventListener("load", function() {
-            iframeLoading.classList.add("hidden");
-        });
-
-        function closeIframe() {
-            iframeViewer.classList.remove("active");
-            document.body.classList.remove("iframe-open");
-            websiteFrame.src = "";
-            iframeLoading.classList.remove("hidden");
-
-            if (location.hash === "#website") {
-                history.back();
-            }
-        }
-
-        iframeClose.addEventListener("click", closeIframe);
-
-        window.addEventListener("popstate", function() {
-            if (iframeViewer.classList.contains("active")) {
-                iframeViewer.classList.remove("active");
-                document.body.classList.remove("iframe-open");
-                websiteFrame.src = "";
-                iframeLoading.classList.remove("hidden");
-            }
-        });
-
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "Escape" &&
-                iframeViewer.classList.contains("active")) {
-                closeIframe();
-            }
-        });
 
     </script>
 
